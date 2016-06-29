@@ -1,0 +1,28 @@
+.thumb {
+  box-sizing: content-box;
+  width: 200px;
+  height: 200px;
+  font-size: 12px;
+  padding: 2px;
+  background: #f8f8f8;
+  border-radius: 5px;
+  border: 1px solid #e5e5e5;
+  float: left;
+  overflow: hidden;
+  margin: 2px;
+}
+
+.thumb-2x-w {
+  width: 410px;
+  height: 50px;
+}
+
+.thumb-3x-w {
+  width: 620px;
+  height: 200px;
+}
+
+.thumb-2x-wh {
+  width: 410px;
+  height: 410px;
+}

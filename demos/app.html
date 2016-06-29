@@ -1,0 +1,203 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF8">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+
+  <!-- Viz external libraries -->
+  <link rel="stylesheet" href="../bower_components/hpcc-viz/dist/hpcc-viz.css" />
+  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="../bower_components/c3/c3.css" />
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body ng-controller="VizCtrl" class="container">
+  <div class="row">
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="chart-mode">Chart Mode:</label>
+        <select id="chart-mode" class="form-control" ng-model="chartMode" ng-options="m for m in chartModes">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="chart-type">● Chart Type:</label>
+        <select id="chart-type" class="form-control" ng-model="chartType" ng-options="t for t in chartTypes">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="graph-layout">● Graph Layout:</label>
+        <select id="graph-layout" class="form-control" ng-model="graphLayout" ng-options="l for l in graphLayouts">
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="row">
+    <viz-table class="thumb"
+      columns="chartColumns"
+      data="chartData"
+      enable-pagination="true"
+      items-per-page="2">
+    </viz-table>
+
+    <viz-wordcloud class="thumb"
+      columns="wordcloudColumns"
+      data="wordcloudData"
+      font-size-from="10"
+      font-size-to="30">
+    </viz-wordcloud>
+
+    <viz-chart class="thumb"
+      type="chartType"
+      columns="chartColumns"
+      data="chartData">
+    </viz-chart>
+
+    <viz-multichart-surface class="thumb"
+      title="'Multichart Surface'"
+      icon="'\uf080'"
+      mode="chartMode"
+      type="chartType"
+      columns="chartColumns"
+      data="chartData"
+      click="clickOnMultiChartGraphPoint($data, $columnName)">
+    </viz-multichart-surface>
+
+    <viz-surface class="thumb"
+      icon="'\uf024'"
+      title="'States/Palette'"
+      content="surfaceContent"
+      menu="surfaceMenu"
+      menu-clicked="surfaceMenuClicked($selection)">
+    </viz-surface>
+  </div>
+
+  <div class="row">
+    <viz-graph class="thumb thumb-2x-wh"
+      data="graphData"
+      layout="graphLayout"
+      show-edges="true"
+      highlight-on-mouse-over-vertex="false"
+      highlight-on-mouse-over-edge="false"
+      shrink-to-fit-on-layout="true"
+      snap-to-grid="false"
+      allow-dragging="true"
+      vertex-click="graphVertexClick($vertex, $event)">
+    </viz-graph>
+
+    <viz-grid class="thumb thumb-2x-wh"
+      contents="gridContents">
+    </viz-grid>
+  </div>
+
+  <div class="row">
+    <viz-slider class="thumb thumb-2x-w"
+      low="2000" high="2010" step="2"
+      allow-range="false"
+      show-play="true"
+      value-changed="sliderValueChanged($value)">
+    </viz-slider>
+
+    <viz-slider class="thumb thumb-2x-w"
+      low="2000" high="2010" step="2"
+      allow-range="true"
+      range-changed="sliderRangeChanged($start, $end)">
+    </viz-slider>
+  </div>
+
+  <div class="row">
+    <viz-tree class="thumb"
+      type="'SUNBURST_PARTITION'"
+      data="treeData1">
+    </viz-tree>
+
+    <viz-tree class="thumb"
+      type="'CIRCLE_PACKING'"
+      data="treeData2">
+    </viz-tree>
+
+    <viz-tree class="thumb"
+      type="'DENDROGRAM'"
+      data="treeData3">
+    </viz-tree>
+
+    <viz-morphtext class="thumb"
+      text="morphtext"
+      anchor="'middle'">
+    </viz-morphtext>
+  </div>
+
+  <div class="row">
+    <viz-gmap class="thumb"
+      data="gmapData">
+    </viz-gmap>
+
+    <viz-choropleth class="thumb"
+      type="'COUNTRIES'"
+      columns="countriesColumns"
+      data="countriesData">
+    </viz-choropleth>
+
+    <viz-choropleth class="thumb"
+      type="'US_STATES'"
+      columns="statesColumns"
+      data="statesData">
+    </viz-choropleth>
+
+    <viz-choropleth class="thumb"
+      type="'US_COUNTIES'"
+      columns="countiesColumns"
+      data="countiesData">
+    </viz-choropleth>
+  </div>
+
+  <div class="row">
+    <textarea class="thumb" ng-model="persistState" placeholder="Enter serialized state">
+    </textarea>
+    <viz-persist class="thumb thumb-3x-w"
+      state="persistState"
+      columns="persistColumns"
+      data="persistData">
+    </viz-persist>
+  </div>
+
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="https://www.google.com/jsapi"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/amcharts/dist/amcharts/amcharts.js"></script>
+  <script src="../bower_components/amcharts/dist/amcharts/funnel.js"></script>
+  <script src="../bower_components/amcharts/dist/amcharts/gantt.js"></script>
+  <script src="../bower_components/amcharts/dist/amcharts/gauge.js"></script>
+  <script src="../bower_components/amcharts/dist/amcharts/pie.js"></script>
+  <script src="../bower_components/amcharts/dist/amcharts/radar.js"></script>
+  <script src="../bower_components/amcharts/dist/amcharts/serial.js"></script>
+  <script src="../bower_components/amcharts/dist/amcharts/xy.js"></script>
+  <script src="../bower_components/d3/d3.js"></script>
+  <script src="../bower_components/c3/c3.js"></script>
+  <script src="../bower_components/colorbrewer/colorbrewer.js"></script>
+  <script src="../bower_components/topojson/topojson.js"></script>
+  <script src="../bower_components/dagre/index.js"></script>
+  <script src="../bower_components/d3-cloud/d3.layout.cloud.js"></script>
+
+  <!-- Viz widgets -->
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-common.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-other.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-layout.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-api.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-form.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-tree.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-chart.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-amchart.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-c3chart.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-graph.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-map.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-google.js"></script>
+  <script src="../bower_components/hpcc-viz/dist/hpcc-viz-marshaller.js"></script>
+
+  <!-- angular-hpcc-viz -->
+  <script src="../dist/angular-hpcc-viz.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "name": "angular-hpcc-viz",
+  "version": "0.0.1",
+  "description": "Angular wrappers around the HPCC Visualization Framework",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hmsonline/angular-hpcc-viz"
+  },
+  "homepage": "https://github.com/hmsonline/angular-hpcc-viz",
+  "keywords": [
+    "hpcc",
+    "hpcc visualization",
+    "angular",
+    "visualization"
+  ],
+  "authors": [
+    "Dean Poulin <dean.poulin@gmail.com>",
+    "Buu Nguyen <buunguyen@gmail.com>"
+  ],
+  "main": [
+    "angular-hpcc-viz.js"
+  ],
+  "dependencies": {
+    "angular": "^1.2.0",
+    "hpcc-viz": "1.4.8"
+  },
+  "resolutions": {
+    "d3": "^3.5.5",
+    "d3-cloud": "v1.0.5"
+  },
+  "ignore": [
+    "package.json",
+    ".gitignore",
+    ".editorconfig",
+    ".jshintrc",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "demos",
+    "src",
+    "gulpfile.js"
+  ]
+}
